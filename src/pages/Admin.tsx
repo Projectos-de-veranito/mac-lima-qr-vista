@@ -1,17 +1,12 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { QrCode, Plus, ChevronLeft } from "lucide-react";
+import { Plus, ChevronLeft, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 import QRGenerator from "@/components/QRGenerator";
 import ProductForm from "@/components/ProductForm";
 
@@ -47,17 +42,16 @@ const mockProducts = [
 ];
 
 const Admin = () => {
+  const { logout } = useAuth();
   const [products, setProducts] = useState(mockProducts);
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // In a real app, this would be managed by authentication
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showProductForm, setShowProductForm] = useState(false);
 
-  const handleLogin = () => {
-    // In a real app, this would validate credentials
-    setIsLoggedIn(true);
+  const handleLogout = () => {
+    logout();
     toast({
-      title: "Acceso concedido",
-      description: "Bienvenido al panel de administración",
+      title: "Sesión cerrada",
+      description: "Has cerrado sesión exitosamente",
     });
   };
 
@@ -96,41 +90,6 @@ const Admin = () => {
     });
   };
 
-  const generateQRUrl = (productId) => {
-    return `${window.location.origin}/producto/${productId}`;
-  };
-
-  if (!isLoggedIn) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-white font-bold text-xl">MAC</span>
-            </div>
-            <CardTitle>Panel de Administración</CardTitle>
-            <CardDescription>
-              Acceso restringido al personal del museo
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="username">Usuario</Label>
-              <Input id="username" placeholder="Ingresa tu usuario" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <Input id="password" type="password" placeholder="Ingresa tu contraseña" />
-            </div>
-            <Button onClick={handleLogin} className="w-full">
-              Iniciar Sesión
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   if (showProductForm) {
     return (
       <div className="min-h-screen bg-slate-50">
@@ -150,6 +109,10 @@ const Admin = () => {
               <h1 className="text-xl font-semibold">
                 {selectedProduct ? "Editar Producto" : "Nuevo Producto"}
               </h1>
+              <Button variant="outline" onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Cerrar Sesión
+              </Button>
             </div>
           </div>
         </header>
@@ -184,6 +147,10 @@ const Admin = () => {
               </div>
               <span className="text-lg font-semibold text-slate-900">Panel de Administración</span>
             </div>
+            <Button variant="outline" onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Cerrar Sesión
+            </Button>
           </div>
         </div>
       </header>

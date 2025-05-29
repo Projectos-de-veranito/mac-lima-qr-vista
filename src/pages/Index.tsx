@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight, QrCode } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const featuredProducts = [
   {
@@ -37,6 +38,8 @@ const featuredProducts = [
 ];
 
 const Index = () => {
+  const { isAdmin } = useAuth();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header */}
@@ -52,11 +55,13 @@ const Index = () => {
                 <p className="text-sm text-slate-600">Museo de Arte Contemporáneo</p>
               </div>
             </div>
-            <Link to="/admin">
-              <Button variant="outline" size="sm">
-                Panel Admin
-              </Button>
-            </Link>
+            {isAdmin && (
+              <Link to="/admin">
+                <Button variant="outline" size="sm">
+                  Panel Admin
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </header>
@@ -79,12 +84,14 @@ const Index = () => {
                 <QrCode className="mr-2 h-5 w-5" />
                 Escanear QR
               </Button>
-              <Link to="/admin">
-                <Button variant="outline" size="lg">
-                  Ver Panel Admin
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
+              {isAdmin && (
+                <Link to="/admin">
+                  <Button variant="outline" size="lg">
+                    Ver Panel Admin
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
