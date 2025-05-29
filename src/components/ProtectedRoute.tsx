@@ -35,13 +35,17 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     }
   };
 
-  if (!isAdmin) {
+    if (!isAdmin) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-white font-bold text-xl">MAC</span>
+            <div className="flex justify-center mb-4">
+              <img 
+                src="https://maclima.pe/wordpress/wp-content/uploads/2019/11/logo_blanco_148x50.png" 
+                alt="MAC Lima"
+                className="h-12 w-auto filter invert"
+              />
             </div>
             <CardTitle>Panel de Administración</CardTitle>
             <CardDescription>

@@ -1,25 +1,44 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Home, ArrowLeft } from "lucide-react";
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center p-4">
+      <Card className="w-full max-w-md text-center">
+        <CardContent className="pt-8 pb-8 space-y-6">
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <img 
+              src="https://maclima.pe/wordpress/wp-content/uploads/2019/11/logo_blanco_148x50.png" 
+              alt="MAC Lima"
+              className="h-12 w-auto filter invert"
+            />
+          </div>
+
+          {/* Error message */}
+          <div className="space-y-3">
+            <div className="text-6xl font-bold text-blue-600 mb-4">404</div>
+            <h1 className="text-2xl font-bold text-slate-900">
+              Página no encontrada
+            </h1>
+            <p className="text-slate-600">
+              La página que buscas no existe.
+            </p>
+          </div>
+
+          {/* Action buttons */}
+          <div className="space-y-3">
+            <Link to="/">
+              <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                <Home className="mr-2 h-4 w-4" />
+                Volver al inicio
+              </Button>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

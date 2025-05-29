@@ -49,16 +49,16 @@ const QRGenerator = ({ products }) => {
   };
 
   return (
-    <div className="grid lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
       {/* QR Generator */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <QrCode className="h-5 w-5" />
+          <CardTitle className="flex items-center space-x-2 text-base md:text-lg">
+            <QrCode className="h-4 w-4 md:h-5 md:w-5" />
             <span>Generar Código QR</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4 md:space-y-6">
           <div className="space-y-2">
             <label className="text-sm font-medium">Seleccionar Producto</label>
             <Select value={selectedProduct} onValueChange={generateQR}>
@@ -69,8 +69,8 @@ const QRGenerator = ({ products }) => {
                 {products.map((product) => (
                   <SelectItem key={product.id} value={product.id}>
                     <div className="flex items-center justify-between w-full">
-                      <span>{product.nombre}</span>
-                      <Badge variant={product.disponible ? "default" : "secondary"} className="ml-2">
+                      <span className="truncate">{product.nombre}</span>
+                      <Badge variant={product.disponible ? "default" : "secondary"} className="ml-2 text-xs">
                         {product.disponible ? "Disponible" : "Agotado"}
                       </Badge>
                     </div>
@@ -83,27 +83,27 @@ const QRGenerator = ({ products }) => {
           {qrCodeUrl && (
             <div className="space-y-4">
               <div className="flex justify-center">
-                <div className="bg-white p-4 rounded-lg border">
+                <div className="bg-white p-3 md:p-4 rounded-lg border">
                   <img
                     src={qrCodeUrl}
                     alt="Código QR del producto"
-                    className="w-64 h-64"
+                    className="w-48 h-48 md:w-64 md:h-64"
                   />
                 </div>
               </div>
               
               <div className="space-y-2">
-                <Button onClick={downloadQR} className="w-full">
+                <Button onClick={downloadQR} className="w-full text-sm">
                   <Download className="mr-2 h-4 w-4" />
                   Descargar QR
                 </Button>
-                <Button variant="outline" onClick={copyUrl} className="w-full">
+                <Button variant="outline" onClick={copyUrl} className="w-full text-sm">
                   Copiar URL del producto
                 </Button>
               </div>
 
               {selectedProduct && (
-                <div className="bg-slate-50 p-4 rounded-lg">
+                <div className="bg-slate-50 p-3 md:p-4 rounded-lg">
                   <p className="text-sm text-slate-600 mb-2">URL del producto:</p>
                   <code className="text-xs bg-white p-2 rounded border block break-all">
                     {`${window.location.origin}/producto/${selectedProduct}`}
@@ -118,7 +118,7 @@ const QRGenerator = ({ products }) => {
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle>Generar QR Rápido</CardTitle>
+          <CardTitle className="text-base md:text-lg">Generar QR Rápido</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -129,16 +129,18 @@ const QRGenerator = ({ products }) => {
             <div className="space-y-3">
               {products.filter(p => p.disponible).map((product) => (
                 <div key={product.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                  <div className="flex-1">
-                    <h4 className="font-medium text-sm">{product.nombre}</h4>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-sm truncate">{product.nombre}</h4>
                     <p className="text-xs text-slate-600">S/ {product.precio}</p>
                   </div>
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => generateQR(product.id)}
+                    className="ml-2 flex-shrink-0"
                   >
                     <QrCode className="h-4 w-4" />
+                    <span className="hidden sm:inline ml-1">QR</span>
                   </Button>
                 </div>
               ))}
@@ -147,7 +149,7 @@ const QRGenerator = ({ products }) => {
             {products.filter(p => p.disponible).length === 0 && (
               <div className="text-center py-8 text-slate-500">
                 <QrCode className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                <p>No hay productos disponibles para generar QR</p>
+                <p className="text-sm">No hay productos disponibles para generar QR</p>
               </div>
             )}
           </div>
