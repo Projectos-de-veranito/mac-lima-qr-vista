@@ -1,9 +1,8 @@
 
-import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronRight, QrCode } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -79,20 +78,16 @@ const Index = () => {
             <p className="text-xl text-slate-600 mb-8">
               Escanea los códigos QR en nuestra tienda física para ver información detallada de nuestros productos exclusivos
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
-                <QrCode className="mr-2 h-5 w-5" />
-                Escanear QR
-              </Button>
-              {isAdmin && (
+            {isAdmin && (
+              <div className="flex justify-center">
                 <Link to="/admin">
-                  <Button variant="outline" size="lg">
+                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
                     Ver Panel Admin
                     <ChevronRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
